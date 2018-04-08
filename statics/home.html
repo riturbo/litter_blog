@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+        <title>静觅博客</title>
+	</head>
+	<body>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="/">MY BLOG</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li {{if .IsCategroy}}class="active"{{end}}>
+                    <a class="nav-link" href="/categroy">分类</a>
+                </li>
+                <li {{if .IsTopic}}class="active"{{end}}>
+                    <a class="nav-link" href="/topic">文章</a>
+                </li>
+
+            </ul>
+            <form class="form-inline" style="margin: auto">
+                <input class="form-control" type="text" placeholder="Search">
+                <button class="btn btn-success" type="button" style="">Search</button>
+            </form>
+            <div class="navbar-nav">
+            {{if .IsLogin}}
+                <li><a class="nav-link" href="/login?exit=yes">退出</a></li>
+            {{else}}
+                <li><a class="nav-link" href="/login">登录</a></li>
+            {{end}}
+            </div>
+
+        </div>
+    </nav>
+
+    <br>
+
+
+	<section class="container">
+    {{range .Topics}}
+        <div class="card">
+            <div class="card-body">
+                <a href="/topic/view?TopicID={{.Id}}" class="card-link" ><h4 class="card-title">{{.Title}}</h4></a>
+                <p class="card-text">{{.Content}}</p>
+				<div class="small text-right">
+                    <span class="viewnum f_r">{{.Updated}}&nbsp;</span>
+                    <span class="viewnum f_r">浏览({{.Views}})&nbsp;</span>
+                    <span class="viewnum f_r">回复({{.ReplyCount}})</span>
+				</div>
+            </div>
+        </div>
+        <br>
+    {{end}}
+
+
+
+	</section>
+
+
+
+
+	</body>
+</html>

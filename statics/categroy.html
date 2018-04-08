@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <title>静觅博客</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="/">MY BLOG</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li {{if .IsCategroy}}class="active"{{end}}>
+                <a class="nav-link" href="/categroy">分类</a>
+            </li>
+            <li {{if .IsTopic}}class="active"{{end}}>
+                <a class="nav-link" href="/topic">文章</a>
+            </li>
+
+        </ul>
+        <form class="form-inline" style="margin: auto">
+            <input class="form-control" type="text" placeholder="Search">
+            <button class="btn btn-success" type="button" style="">Search</button>
+        </form>
+        <div class="navbar-nav">
+        {{if .IsLogin}}
+            <li><a class="nav-link" href="/login?exit=yes">退出</a></li>
+        {{else}}
+            <li><a class="nav-link" href="/login">登录</a></li>
+        {{end}}
+        </div>
+
+    </div>
+</nav>
+
+<br>
+
+
+<div class="container">
+    <h1>分类列表</h1>
+    <form  action="/categroy"   method="get">
+        <div class="form-group">
+            <label>分类名称:</label>
+            <input  id="name" class="form-control" name="name" placeholder="Enter Categroy">
+        </div>
+        <input type="hidden" name="op" value="add">
+        <button  class="btn btn-primary" onclick="return checkInput();">添加</button>
+    </form>
+
+    <table class="table table-striped">
+        <thread>
+            <th>＃</th>
+            <th>名称</th>
+            <th>文章数</th>
+            <th>操作</th>
+        </thread>
+    {{range .Categroies}}
+        <tbody>
+
+            <th>{{.Id}}</th>
+            <th>{{.Title}}</th>
+            <th>{{.Count}}</th>
+            <th>  <a href="/categroy?op=del&id={{.Id}}">删除<br></a></th>
+
+            <br>
+        </tbody>
+    {{end}}
+    </table>
+</div>
+
+<script type="text/javascript">
+    function checkInput() {
+        var name=document.getElementById("name");
+        if(name.value.length==0){
+            alert("请输入分类名称");
+            return false
+        }
+
+    }
+
+</script>
+</body>
+</html>
